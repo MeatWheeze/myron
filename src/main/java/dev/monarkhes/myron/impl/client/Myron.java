@@ -22,10 +22,10 @@ import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.AffineTransformation;
-import net.minecraft.util.math.Vec3f;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,8 +36,8 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class Myron implements ClientModInitializer {
-    private final static Vec3f NONE = new Vec3f();
-    private final static Vec3f BLOCKS = new Vec3f(0.5F, 0.5F, 0.5F);
+    private final static Vector3f NONE = new Vector3f();
+    private final static Vector3f BLOCKS = new Vector3f(0.5F, 0.5F, 0.5F);
 
     public static final String MOD_ID = "myron";
     public static final Logger LOGGER = LogManager.getLogger("Myron");
@@ -51,9 +51,9 @@ public class Myron implements ClientModInitializer {
             Collection<Identifier> ids = new HashSet<>();
 
             Collection<Identifier> candidates = new ArrayList<>();
-            candidates.addAll(manager.findResources("models/block", path -> true));
-            candidates.addAll(manager.findResources("models/item", path -> true));
-            candidates.addAll(manager.findResources("models/misc", path -> true));
+            candidates.addAll(manager.findResources("models/block", path -> true).keySet());
+            candidates.addAll(manager.findResources("models/item", path -> true).keySet());
+            candidates.addAll(manager.findResources("models/misc", path -> true).keySet());
 
             for (Identifier id : candidates) {
                 if (id.getPath().endsWith(".obj")) {
@@ -62,7 +62,7 @@ public class Myron implements ClientModInitializer {
                 } else {
                     Identifier test = new Identifier(id.getNamespace(), id.getPath() + ".obj");
 
-                    if (manager.containsResource(test)) {
+                    if (manager.getResource(test).isPresent()) {
                         ids.add(id);
                     }
                 }
@@ -95,9 +95,9 @@ public class Myron implements ClientModInitializer {
             modelPath = new Identifier(modelPath.getNamespace(), "models/" + modelPath.getPath());
         }
 
-        if (resourceManager.containsResource(modelPath)) {
+        if (resourceManager.getResource(modelPath).isPresent()) {
             try {
-                InputStream inputStream = resourceManager.getResource(modelPath).getInputStream();
+                InputStream inputStream = resourceManager.getResource(modelPath).get().getInputStream();
                 Obj obj = ObjReader.read(inputStream);
 
                 Map<String, MyronMaterial> materials = getMaterials(resourceManager, modelPath, obj);
@@ -118,9 +118,9 @@ public class Myron implements ClientModInitializer {
             path = path.substring(0, path.lastIndexOf('/') + 1) + s;
             Identifier resource = new Identifier(identifier.getNamespace(), path);
 
-            if (resourceManager.containsResource(resource)) {
+            if (resourceManager.getResource(resource).isPresent()) {
                 MaterialReader.read(new BufferedReader(
-                        new InputStreamReader(resourceManager.getResource(resource).getInputStream())))
+                        new InputStreamReader(resourceManager.getResource(resource).get().getInputStream())))
                         .forEach(material -> materials.put(material.name, material));
             } else {
                 Myron.LOGGER.warn("Texture does not exist: {}", resource);
@@ -171,9 +171,9 @@ public class Myron implements ClientModInitializer {
                     ? group.getTexCoord(face.getTexCoordIndex(0))
                     : null;
 
-            Vec3f pos = of(group.getVertex(face.getVertexIndex(0)));
+            Vector3f pos = of(group.getVertex(face.getVertexIndex(0)));
             pos.add(isBlock ? BLOCKS : NONE);
-            Vec3f normal = of(group.getNormal(face.getNormalIndex(0)));
+            Vector3f normal = of(group.getNormal(face.getNormalIndex(0)));
 
             rotate(settings, pos, normal);
 
@@ -250,12 +250,12 @@ public class Myron implements ClientModInitializer {
     }
 
     private static void vertex(QuadEmitter emitter, Obj group, ObjFace face, int vertex, ModelBakeSettings settings, boolean isBlock) {
-        Vec3f pos = of(group.getVertex(face.getVertexIndex(vertex)));
+        Vector3f pos = of(group.getVertex(face.getVertexIndex(vertex)));
 
         // Used to offset blocks
         pos.add(isBlock ? BLOCKS : NONE);
 
-        Vec3f normal = face.containsNormalIndices()
+        Vector3f normal = face.containsNormalIndices()
                 ? of(group.getNormal(face.getNormalIndex(vertex)))
                 : calculateNormal(group, face);
 
@@ -278,48 +278,48 @@ public class Myron implements ClientModInitializer {
         }
     }
 
-    private static Vec3f calculateNormal(Obj group, ObjFace face) {
-        Vec3f p1 = of(group.getVertex(face.getVertexIndex(0)));
-        Vec3f v1 = of(group.getVertex(face.getVertexIndex(1)));
-        Vec3f v2 = of(group.getVertex(face.getVertexIndex(2)));
+    private static Vector3f calculateNormal(Obj group, ObjFace face) {
+        Vector3f p1 = of(group.getVertex(face.getVertexIndex(0)));
+        Vector3f v1 = of(group.getVertex(face.getVertexIndex(1)));
+        Vector3f v2 = of(group.getVertex(face.getVertexIndex(2)));
 
-        v1.subtract(p1);
-        v2.subtract(p1);
+        v1.sub(p1);
+        v2.sub(p1);
 
-        return new Vec3f(
-                v1.getY() * v2.getZ() - v1.getZ() * v2.getY(),
-                v1.getZ() * v2.getX() - v1.getX() * v2.getZ(),
-                v1.getX() * v2.getY() - v1.getY() * v2.getX()
+        return new Vector3f(
+                v1.y() * v2.z() - v1.z() * v2.y(),
+                v1.z() * v2.x() - v1.x() * v2.z(),
+                v1.x() * v2.y() - v1.y() * v2.x()
         );
     }
 
-    private static void rotate(ModelBakeSettings settings, Vec3f pos, Vec3f normal) {
+    private static void rotate(ModelBakeSettings settings, Vector3f pos, Vector3f normal) {
         if (settings.getRotation() != AffineTransformation.identity()) {
             pos.add(-0.5F, -0.5F, -0.5F);
-            pos.rotate(settings.getRotation().getRotation2());
+            pos.rotate(settings.getRotation().getRightRotation());
             pos.add(0.5f, 0.5f, 0.5f);
 
-            normal.rotate(settings.getRotation().getRotation2());
+            normal.rotate(settings.getRotation().getRightRotation());
         }
     }
 
-    private static void vertex(QuadEmitter emitter, int vertex, Vec3f pos, Vec3f normal, float u, float v) {
+    private static void vertex(QuadEmitter emitter, int vertex, Vector3f pos, Vector3f normal, float u, float v) {
         emitter.pos(vertex, pos);
         emitter.normal(vertex, normal);
         emitter.sprite(vertex, 0, u, v);
     }
 
-    private static Vec3f of(FloatTuple tuple) {
-        return new Vec3f(tuple.getX(), tuple.getY(), tuple.getZ());
+    private static Vector3f of(FloatTuple tuple) {
+        return new Vector3f(tuple.getX(), tuple.getY(), tuple.getZ());
     }
 
     private static class Vertex {
-        public final Vec3f pos;
-        public final Vec3f normal;
+        public final Vector3f pos;
+        public final Vector3f normal;
         public final float u;
         public final float v;
 
-        private Vertex(Vec3f pos, Vec3f normal, float u, float v) {
+        private Vertex(Vector3f pos, Vector3f normal, float u, float v) {
             this.pos = pos;
             this.normal = normal;
             this.u = u;

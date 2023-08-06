@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT'
+    id 'fabric-loom' version '1.1-SNAPSHOT'
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
@@ -77,24 +77,21 @@ jar {
 }
 
 publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            // add all the jars that should be included when publishing to maven
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
+    repositories {
+        maven {
+            name 'Lazurite'
+            url 'https://lazurite.dev/releases'
+            credentials(PasswordCredentials)
+            authentication {
+                register("basic", BasicAuthentication)
             }
         }
     }
 
-    repositories {
-        maven {
-            url 's3://hephaestus.dev/release'
-            authentication {
-                awsIm(AwsImAuthentication)
-            }
+    publications {
+        "${project.name}"(MavenPublication) {
+            artifactId = archivesBaseName
+            from components.java
         }
     }
 }

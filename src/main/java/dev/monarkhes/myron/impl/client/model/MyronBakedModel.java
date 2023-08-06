@@ -36,24 +36,6 @@ public class MyronBakedModel implements BakedModel, FabricBakedModel {
         this.isSideLit = isSideLit;
     }
 
-    @Override
-    public void emitBlockQuads(BlockRenderView blockRenderView, BlockState blockState, BlockPos blockPos, Supplier<Random> supplier, RenderContext renderContext) {
-        if (this.mesh != null) {
-            renderContext.meshConsumer().accept(mesh);
-        } else {
-            Myron.LOGGER.warn("Mesh is null while emitting block quads for block {}", blockState.getBlock().getName().asString());
-        }
-    }
-
-    @Override
-    public void emitItemQuads(ItemStack itemStack, Supplier<Random> supplier, RenderContext renderContext) {
-        if (this.mesh != null) {
-            renderContext.meshConsumer().accept(mesh);
-        } else {
-            Myron.LOGGER.warn("Mesh is null while emitting block quads for item {}", itemStack.getItem().getName().asString());
-        }
-    }
-
     // Since FabricBakedModels defer to use `emitBlockQuads` and `emitItemQuads`, this will only be called if
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, Random random) {
         if (this.backupQuads == null) {
@@ -63,6 +45,11 @@ public class MyronBakedModel implements BakedModel, FabricBakedModel {
         }
 
         return this.backupQuads;
+    }
+
+    @Override
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, net.minecraft.util.math.random.Random random) {
+        return null;
     }
 
     @Override
@@ -103,5 +90,23 @@ public class MyronBakedModel implements BakedModel, FabricBakedModel {
     @Override
     public boolean isVanillaAdapter() {
         return false;
+    }
+
+    @Override
+    public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<net.minecraft.util.math.random.Random> randomSupplier, RenderContext context) {
+        if (this.mesh != null) {
+            context.meshConsumer().accept(mesh);
+        } else {
+            Myron.LOGGER.warn("Mesh is null while emitting block quads for block {}", state.getBlock().getName().getString());
+        }
+    }
+
+    @Override
+    public void emitItemQuads(ItemStack stack, Supplier<net.minecraft.util.math.random.Random> randomSupplier, RenderContext context) {
+        if (this.mesh != null) {
+            context.meshConsumer().accept(mesh);
+        } else {
+            Myron.LOGGER.warn("Mesh is null while emitting block quads for item {}", stack.getItem().getName().getString());
+        }
     }
 }
