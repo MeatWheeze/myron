@@ -18,7 +18,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class MyronBakedModel implements BakedModel, FabricBakedModel {
@@ -36,8 +35,8 @@ public class MyronBakedModel implements BakedModel, FabricBakedModel {
         this.isSideLit = isSideLit;
     }
 
-    // Since FabricBakedModels defer to use `emitBlockQuads` and `emitItemQuads`, this will only be called if
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, Random random) {
+    @Override
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, net.minecraft.util.math.random.Random random) {
         if (this.backupQuads == null) {
             this.backupQuads = new ArrayList<>();
 
@@ -45,11 +44,6 @@ public class MyronBakedModel implements BakedModel, FabricBakedModel {
         }
 
         return this.backupQuads;
-    }
-
-    @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction face, net.minecraft.util.math.random.Random random) {
-        return null;
     }
 
     @Override
