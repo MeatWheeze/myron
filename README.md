@@ -1,3 +1,15 @@
+## Note from BlueVista
+This fork is just a port to 1.19.4. If you would like to use it, it's on my personal maven.
+```groovy
+repositories {
+    maven { url "https://lazurite.dev/releases" }
+}
+
+dependencies {
+    modImplementation "dev.monarkhes:myron:1.6.2+1.19.4" 
+}
+```
+
 # Myron ![latest version](https://img.shields.io/github/v/release/Haven-King/Myron)
 An OBJ loading library for the fabric ecosystem
 
