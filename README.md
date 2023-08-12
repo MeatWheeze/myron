@@ -6,7 +6,7 @@ repositories {
 }
 
 dependencies {
-    modImplementation "dev.monarkhes:myron:1.6.2+1.19.4" 
+    modImplementation "dev.monarkhes:myron:1.6.2+1.20" 
 }
 ```
 
