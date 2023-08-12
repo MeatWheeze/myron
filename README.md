@@ -6,9 +6,11 @@ repositories {
 }
 
 dependencies {
-    modImplementation "dev.monarkhes:myron:1.6.2+1.20" 
+    modImplementation "dev.monarkhes:myron:1.6.2+1.20.1" 
 }
 ```
+
+### TODO - Make compatible with latest FAPI (new model loading registry api)
 
 # Myron ![latest version](https://img.shields.io/github/v/release/Haven-King/Myron)
 An OBJ loading library for the fabric ecosystem
