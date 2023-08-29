@@ -5,12 +5,12 @@
   "name": "Myron",
   "description": "An OBJ model loader for the fabric ecosystem",
   "authors": [
+    "BlueVista",
     "Haven King",
     "abused_master"
   ],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/myron/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -24,8 +24,8 @@
   ],
   "depends": {
     "fabricloader": ">=0.14",
-    "fabric": ">=0.70.0+1.19.4",
-    "minecraft": ">=1.19.4"
+    "fabric": ">=0.70.0+1.19.2",
+    "minecraft": ">=1.19.2"
   },
   "breaks": {
     "foml": "*"
