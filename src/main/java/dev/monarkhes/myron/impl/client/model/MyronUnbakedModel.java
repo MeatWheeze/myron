@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 public class MyronUnbakedModel implements UnbakedModel {
@@ -40,22 +41,21 @@ public class MyronUnbakedModel implements UnbakedModel {
     }
 
     @Override
-    public void setParents(Function<Identifier, UnbakedModel> modelLoader) {
-
+    public Collection<SpriteIdentifier> getTextureDependencies(Function<Identifier, UnbakedModel> unbakedModelGetter, Set<com.mojang.datafixers.util.Pair<String, String>> unresolvedTextureReferences) {
+        return this.textureDependencies;
     }
 
-    @Nullable
     @Override
-    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId) {
+    public @Nullable BakedModel bake(ModelLoader loader, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, Identifier modelId) {
         Mesh mesh;
 
         if (obj == null)
             // Try to load the obj (previous behavior)
-            mesh = Myron.load(modelId, textureGetter, rotationContainer, isBlock);
+            mesh = Myron.load(modelId, textureGetter, bakeSettings, isBlock);
         else
             // We already loaded the obj earlier in AbstractObjLoader. Don't use the external utility to re-load the obj
             // (it works only on absolute identifiers, not ModelIdentifiers like 'myron:torus#inventory')
-            mesh = Myron.build(obj, materials, textureGetter, rotationContainer, isBlock);
+            mesh = Myron.build(obj, materials, textureGetter, bakeSettings, isBlock);
 
         Myron.MESHES.put(modelId, mesh);
 
