@@ -1,10 +1,10 @@
-package dev.monarkhes.myron.impl.client.obj;
+package dev.monarkhes.myron_neepmeat.impl.client.obj;
 
 import de.javagl.obj.Obj;
 import de.javagl.obj.ObjReader;
-import dev.monarkhes.myron.impl.client.Myron;
-import dev.monarkhes.myron.impl.client.model.MyronMaterial;
-import dev.monarkhes.myron.impl.client.model.MyronUnbakedModel;
+import dev.monarkhes.myron_neepmeat.impl.client.Myron;
+import dev.monarkhes.myron_neepmeat.impl.client.model.MyronMaterial;
+import dev.monarkhes.myron_neepmeat.impl.client.model.MyronUnbakedModel;
 import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.MissingSprite;

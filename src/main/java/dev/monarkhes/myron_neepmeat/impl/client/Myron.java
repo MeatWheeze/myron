@@ -1,9 +1,9 @@
-package dev.monarkhes.myron.impl.client;
+package dev.monarkhes.myron_neepmeat.impl.client;
 
 import de.javagl.obj.*;
-import dev.monarkhes.myron.impl.client.model.MyronMaterial;
-import dev.monarkhes.myron.impl.client.obj.MaterialReader;
-import dev.monarkhes.myron.impl.client.obj.ObjLoader;
+import dev.monarkhes.myron_neepmeat.impl.client.model.MyronMaterial;
+import dev.monarkhes.myron_neepmeat.impl.client.obj.MaterialReader;
+import dev.monarkhes.myron_neepmeat.impl.client.obj.ObjLoader;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -39,8 +39,8 @@ public class Myron implements ClientModInitializer {
     private final static Vec3f NONE = new Vec3f();
     private final static Vec3f BLOCKS = new Vec3f(0.5F, 0.5F, 0.5F);
 
-    public static final String MOD_ID = "myron";
-    public static final Logger LOGGER = LogManager.getLogger("Myron");
+    public static final String MOD_ID = "myron-neepmeat";
+    public static final Logger LOGGER = LogManager.getLogger("Myron-NEEPMeat");
     public static final Map<Identifier, Mesh> MESHES = new HashMap<>();
 
     @Override

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "myron",
+  "id": "myron-neepmeat",
   "version": "${version}",
-  "name": "Myron",
-  "description": "An OBJ model loader for the fabric ecosystem",
+  "name": "Myron-NEEPMeat",
+  "description": "An OBJ model loader for the fabric ecosystem (NEEPMeat fork)",
   "authors": [
     "BlueVista",
     "Haven King",
@@ -16,7 +16,7 @@
     "main": [
     ],
     "client": [
-      "dev.monarkhes.myron.impl.client.Myron"
+      "dev.monarkhes.myron_neepmeat.impl.client.Myron"
     ]
   },
   "mixins": [

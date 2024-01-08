@@ -1,7 +1,7 @@
-package dev.monarkhes.myron.api;
+package dev.monarkhes.myron_neepmeat.api;
 
-import dev.monarkhes.myron.impl.client.Namespaces;
-import dev.monarkhes.myron.impl.mixin.BakedModelManagerAccessor;
+import dev.monarkhes.myron_neepmeat.impl.client.Namespaces;
+import dev.monarkhes.myron_neepmeat.impl.mixin.BakedModelManagerAccessor;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.BakedModel;
@@ -10,10 +10,8 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.profiling.jfr.event.PacketEvent;
 import org.jetbrains.annotations.Nullable;
 
-import javax.naming.Name;
 import java.util.function.Function;
 
 public class Myron {
@@ -28,7 +26,7 @@ public class Myron {
     }
 
     public static @Nullable Mesh load(Identifier modelPath, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, boolean isBlock) {
-        return dev.monarkhes.myron.impl.client.Myron.load(modelPath, textureGetter, bakeSettings, isBlock);
+        return dev.monarkhes.myron_neepmeat.impl.client.Myron.load(modelPath, textureGetter, bakeSettings, isBlock);
     }
 
     /**

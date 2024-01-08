@@ -1,7 +1,7 @@
-package dev.monarkhes.myron.impl.client.model;
+package dev.monarkhes.myron_neepmeat.impl.client.model;
 
 import de.javagl.obj.Obj;
-import dev.monarkhes.myron.impl.client.Myron;
+import dev.monarkhes.myron_neepmeat.impl.client.Myron;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.ModelTransformation;

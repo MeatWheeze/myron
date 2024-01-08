@@ -1,4 +1,4 @@
-package dev.monarkhes.myron.impl.client;
+package dev.monarkhes.myron_neepmeat.impl.client;
 
 import com.google.common.collect.Sets;
 
