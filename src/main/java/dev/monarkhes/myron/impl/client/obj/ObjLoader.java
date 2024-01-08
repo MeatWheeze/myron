@@ -2,6 +2,7 @@ package dev.monarkhes.myron.impl.client.obj;
 
 import com.google.gson.*;
 import dev.monarkhes.myron.impl.client.Myron;
+import dev.monarkhes.myron.impl.client.Namespaces;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelProviderContext;
@@ -35,11 +36,17 @@ public class ObjLoader extends AbstractObjLoader implements ModelResourceProvide
 
     @Override
     public @Nullable UnbakedModel loadModelResource(Identifier identifier, ModelProviderContext modelProviderContext) {
+        if (!Namespaces.check(identifier.getNamespace()))
+            return null;
+
         return loadModel(this.resourceManager, identifier, ModelTransformation.NONE, true);
     }
 
     @Override
     public @Nullable UnbakedModel loadModelVariant(ModelIdentifier modelIdentifier, ModelProviderContext modelProviderContext) {
+        if (!Namespaces.check(modelIdentifier.getNamespace()))
+            return null;
+
         Identifier resource = new Identifier(
                 modelIdentifier.getNamespace(),
                 "models/item/" + modelIdentifier.getPath () + ".json");

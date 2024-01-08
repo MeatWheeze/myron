@@ -25,6 +25,7 @@ public class AbstractObjLoader {
 
     protected @Nullable UnbakedModel loadModel(
             ResourceManager resourceManager, Identifier identifier, ModelTransformation transformation, boolean isSideLit) {
+
         boolean isBlock = identifier.getPath().startsWith("block");
 
         if (!identifier.getPath().endsWith(".obj")) {

@@ -1,5 +1,6 @@
 package dev.monarkhes.myron.api;
 
+import dev.monarkhes.myron.impl.client.Namespaces;
 import dev.monarkhes.myron.impl.mixin.BakedModelManagerAccessor;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.minecraft.client.MinecraftClient;
@@ -9,8 +10,10 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.profiling.jfr.event.PacketEvent;
 import org.jetbrains.annotations.Nullable;
 
+import javax.naming.Name;
 import java.util.function.Function;
 
 public class Myron {
@@ -26,5 +29,14 @@ public class Myron {
 
     public static @Nullable Mesh load(Identifier modelPath, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, boolean isBlock) {
         return dev.monarkhes.myron.impl.client.Myron.load(modelPath, textureGetter, bakeSettings, isBlock);
+    }
+
+    /**
+     * Tells Myron that the OBJ files from the given namespace should be treated.
+     * @param namespace Mod ID to be registered
+     */
+    public static void registerNamespace(String namespace)
+    {
+        Namespaces.register(namespace);
     }
 }
