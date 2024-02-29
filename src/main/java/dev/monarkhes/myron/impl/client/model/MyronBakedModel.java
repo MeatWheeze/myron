@@ -89,7 +89,7 @@ public class MyronBakedModel implements BakedModel, FabricBakedModel {
     @Override
     public void emitBlockQuads(BlockRenderView blockView, BlockState state, BlockPos pos, Supplier<net.minecraft.util.math.random.Random> randomSupplier, RenderContext context) {
         if (this.mesh != null) {
-            context.meshConsumer().accept(mesh);
+            mesh.outputTo(context.getEmitter());
         } else {
             Myron.LOGGER.warn("Mesh is null while emitting block quads for block {}", state.getBlock().getName().getString());
         }
@@ -98,7 +98,7 @@ public class MyronBakedModel implements BakedModel, FabricBakedModel {
     @Override
     public void emitItemQuads(ItemStack stack, Supplier<net.minecraft.util.math.random.Random> randomSupplier, RenderContext context) {
         if (this.mesh != null) {
-            context.meshConsumer().accept(mesh);
+            mesh.outputTo(context.getEmitter());
         } else {
             Myron.LOGGER.warn("Mesh is null while emitting block quads for item {}", stack.getItem().getName().getString());
         }
