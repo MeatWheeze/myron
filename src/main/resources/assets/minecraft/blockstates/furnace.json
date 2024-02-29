@@ -9,7 +9,8 @@
       "y": 90
     },
     "facing=north,lit=false": {
-      "model": "minecraft:block/large_motor"
+      "model": "minecraft:block/large_motor",
+      "x": 90
     },
     "facing=north,lit=true": {
       "model": "minecraft:block/furnace_on"

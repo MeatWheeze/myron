@@ -18,6 +18,7 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.ModelBakeSettings;
+import net.minecraft.client.render.model.ModelRotation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
@@ -28,6 +29,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,8 +50,6 @@ public class Myron implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-//        ModelLoadingPlugin.register(new MyronPlugin());
-//        PreparableModelLoadingPlugin.register(MyronPlugin::loader, new MyronPlugin());
 
         ModelLoadingRegistry.INSTANCE.registerResourceProvider(ObjLoader::new);
         ModelLoadingRegistry.INSTANCE.registerVariantProvider(ObjLoader::new);
@@ -302,10 +302,13 @@ public class Myron implements ClientModInitializer {
     private static void rotate(ModelBakeSettings settings, Vector3f pos, Vector3f normal) {
         if (settings.getRotation() != AffineTransformation.identity()) {
             pos.add(-0.5F, -0.5F, -0.5F);
-            pos.rotate(settings.getRotation().getRightRotation());
+            var thing = new Vector4f(pos, 1).mul(settings.getRotation().getMatrix());
+            pos.x = thing.x;
+            pos.y = thing.y;
+            pos.z = thing.z;
             pos.add(0.5f, 0.5f, 0.5f);
 
-            normal.rotate(settings.getRotation().getRightRotation());
+            normal.rotate(settings.getRotation().getLeftRotation());
         }
     }
 
