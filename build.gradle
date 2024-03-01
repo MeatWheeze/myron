@@ -21,7 +21,7 @@ repositories {
 // Relocating a Package
 shadowJar {
     configurations = [project.configurations.shadow]
-    relocate 'de.javagl.obj', 'myron.shaded.de.javagl.obj'
+    relocate 'de.javagl.obj', 'myron_neepmeat.shaded.de.javagl.obj'
     classifier = "shadow"
 }
 
@@ -66,7 +66,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/myron.accesswidener")
+    accessWidenerPath = file("src/main/resources/myron_neepmeat.accesswidener")
 }
 
 jar {

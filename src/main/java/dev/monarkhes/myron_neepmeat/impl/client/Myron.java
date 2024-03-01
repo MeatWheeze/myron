@@ -1,15 +1,13 @@
-package dev.monarkhes.myron.impl.client;
+package dev.monarkhes.myron_neepmeat.impl.client;
 
 import de.javagl.obj.*;
-import dev.monarkhes.myron.impl.client.model.MyronMaterial;
-import dev.monarkhes.myron.impl.client.obj.MaterialReader;
-import dev.monarkhes.myron.impl.client.obj.ObjLoader;
+import dev.monarkhes.myron_neepmeat.impl.client.model.MyronMaterial;
+import dev.monarkhes.myron_neepmeat.impl.client.obj.MaterialReader;
+import dev.monarkhes.myron_neepmeat.impl.client.obj.ObjLoader;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
-import net.fabricmc.fabric.api.client.model.loading.v1.PreparableModelLoadingPlugin;
 import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
@@ -18,7 +16,6 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.ModelBakeSettings;
-import net.minecraft.client.render.model.ModelRotation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
@@ -35,7 +32,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.PreparedStatement;
 import java.util.*;
 import java.util.function.Function;
 

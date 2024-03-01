@@ -1,26 +1,26 @@
 {
   "schemaVersion": 1,
-  "id": "myron",
+  "id": "myron-neepmeat",
   "version": "${version}",
-  "name": "Myron",
-  "description": "An OBJ model loader for the fabric ecosystem",
+  "name": "Myron-NEEPMeat",
+  "description": "An OBJ model loader for the fabric ecosystem (NEEPMeat fork)",
   "authors": [
     "Haven King",
     "abused_master"
   ],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/myron/icon.png",
+  "icon": "assets/myron_neepmeat/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
     ],
     "client": [
-      "dev.monarkhes.myron.impl.client.Myron"
+      "dev.monarkhes.myron_neepmeat.impl.client.Myron"
     ]
   },
   "mixins": [
-    "myron.mixins.json"
+    "myron_neepmeat.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14",
@@ -30,5 +30,5 @@
   "breaks": {
     "foml": "*"
   },
-  "accessWidener": "myron.accesswidener"
+  "accessWidener": "myron_neepmeat.accesswidener"
 }

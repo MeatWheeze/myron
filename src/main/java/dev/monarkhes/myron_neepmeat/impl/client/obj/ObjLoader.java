@@ -1,7 +1,7 @@
-package dev.monarkhes.myron.impl.client.obj;
+package dev.monarkhes.myron_neepmeat.impl.client.obj;
 
 import com.google.gson.*;
-import dev.monarkhes.myron.impl.client.Myron;
+import dev.monarkhes.myron_neepmeat.impl.client.Myron;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelProviderContext;
