@@ -1,5 +1,6 @@
 package dev.monarkhes.myron_neepmeat.api;
 
+import dev.monarkhes.myron_neepmeat.impl.Namespaces;
 import dev.monarkhes.myron_neepmeat.impl.mixin.BakedModelManagerAccessor;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.minecraft.client.MinecraftClient;
@@ -26,5 +27,14 @@ public class Myron {
 
     public static @Nullable Mesh load(Identifier modelPath, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings bakeSettings, boolean isBlock) {
         return dev.monarkhes.myron_neepmeat.impl.client.Myron.load(modelPath, textureGetter, bakeSettings, isBlock);
+    }
+
+    /**
+     * Tells Myron that the OBJ files from the given namespace should be treated.
+     * @param namespace Mod ID to be registered
+     */
+    public static void registerNamespace(String namespace)
+    {
+        Namespaces.register(namespace);
     }
 }
