@@ -7,6 +7,7 @@ import dev.monarkhes.myron_neepmeat.impl.client.model.MyronMaterial;
 import dev.monarkhes.myron_neepmeat.impl.client.model.MyronUnbakedModel;
 import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.screen.PlayerScreenHandler;
@@ -44,7 +45,17 @@ public class AbstractObjLoader {
                 Collection<SpriteIdentifier> textureDependencies = new HashSet<>();
 
                 for (MyronMaterial material : materials.values()) {
-                    textureDependencies.add(new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, material.getTexture()));
+                    Identifier materialTexture = material.getTexture();
+                    if (materialTexture != null)
+                    {
+                        textureDependencies.add(new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, materialTexture));
+                    }
+                    else
+                    {
+                        textureDependencies.add(new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE,
+                                MissingSprite.getMissingSpriteId()));
+                        Myron.LOGGER.warn("No texture specified for material '{}' in model '{}'; using missing texture.", material.name, identifier);
+                    }
                 }
 
                 MyronMaterial material = materials.get("sprite");

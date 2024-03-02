@@ -4,16 +4,14 @@ import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.material.BlendMode;
 import net.fabricmc.fabric.api.renderer.v1.material.MaterialFinder;
 import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
+import net.minecraft.client.render.model.BakedModelManager;
+import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 
 public class MyronMaterial {
-    public static final MyronMaterial DEFAULT = new MyronMaterial("missing_texture");
-
-    static {
-        DEFAULT.setTexture(new Identifier(""));
-    }
+    public static final MyronMaterial DEFAULT = new DefaultMaterial();
 
     public final String name;
 
@@ -36,7 +34,8 @@ public class MyronMaterial {
     }
 
     public void setTexture(Identifier textureId) {
-        this.texture = textureId;
+        if (!textureId.getPath().isEmpty())
+            this.texture = textureId;
     }
 
     public void setColor(float kd0, float kd1, float kd2) {
@@ -123,6 +122,20 @@ public class MyronMaterial {
             return this.name.hashCode();
         } else {
             return this.texture.hashCode();
+        }
+    }
+
+    private static class DefaultMaterial extends MyronMaterial
+    {
+        public DefaultMaterial()
+        {
+            super("missing_texture");
+        }
+
+        @Override
+        public Identifier getTexture()
+        {
+            return MissingSprite.getMissingSpriteId();
         }
     }
 }

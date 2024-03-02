@@ -17,10 +17,12 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.ModelBakeSettings;
+import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.resource.ResourceManager;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.AffineTransformation;
 import org.apache.logging.log4j.LogManager;
@@ -48,7 +50,7 @@ public class Myron implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-//        Namespaces.register("minecraft");
+        Namespaces.register("minecraft");
 
         ModelLoadingRegistry.INSTANCE.registerResourceProvider(ObjLoader::new);
         ModelLoadingRegistry.INSTANCE.registerVariantProvider(ObjLoader::new);
@@ -151,11 +153,15 @@ public class Myron implements ClientModInitializer {
             MyronMaterial material = materials.get(entry.getKey());
 
             if (material == null) {
+                // Ignore the material called 'none' since Blockbench likes to add it to the model. I don't know if this is ideal behaviour, but it works.
+                if (!entry.getKey().equals("none")) {
+                    Myron.LOGGER.warn("Material '{}' found model not found in {}; using default material.", entry.getKey(), obj.getMtlFileNames());
+                }
                 material = MyronMaterial.DEFAULT;
             }
 
             int materialColor = material.getColor();
-            Sprite sprite = textureGetter.apply(new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, material.getTexture()));
+            Sprite sprite = textureGetter.apply(new SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, material.getTexture()));
 
             for (int faceIndex = 0; faceIndex < group.getNumFaces(); ++faceIndex) {
                 face(renderer, emitter, group, group.getFace(faceIndex), material, materialColor, sprite, bakeSettings, isBlock);

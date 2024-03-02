@@ -15,7 +15,7 @@ public class MaterialReader {
 
     static {
         register((tokenizer, line, key, material) ->
-                material.setTexture(new Identifier(line.substring(key.length()).trim())),
+                material.setTexture(Identifier.tryParse(line.substring(key.length()).trim())),
                 "map_Kd", "texture");
 
         register((tokenizer, line, key, material) ->
