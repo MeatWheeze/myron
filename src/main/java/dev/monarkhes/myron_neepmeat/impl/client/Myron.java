@@ -1,6 +1,7 @@
 package dev.monarkhes.myron_neepmeat.impl.client;
 
 import de.javagl.obj.*;
+import dev.monarkhes.myron_neepmeat.impl.Namespaces;
 import dev.monarkhes.myron_neepmeat.impl.client.model.MyronMaterial;
 import dev.monarkhes.myron_neepmeat.impl.client.obj.MaterialReader;
 import dev.monarkhes.myron_neepmeat.impl.client.obj.ObjLoader;
@@ -47,6 +48,8 @@ public class Myron implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
+//        Namespaces.register("minecraft");
+
         ModelLoadingRegistry.INSTANCE.registerResourceProvider(ObjLoader::new);
         ModelLoadingRegistry.INSTANCE.registerVariantProvider(ObjLoader::new);
         ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
@@ -58,6 +61,9 @@ public class Myron implements ClientModInitializer {
             candidates.addAll(manager.findResources("models/misc", path -> true).keySet());
 
             for (Identifier id : candidates) {
+                if (!Namespaces.check(id.getNamespace()))
+                    continue;
+
                 if (id.getPath().endsWith(".obj")) {
                     ids.add(id);
                     ids.add(new Identifier(id.getNamespace(), id.getPath().substring(0, id.getPath().indexOf(".obj"))));

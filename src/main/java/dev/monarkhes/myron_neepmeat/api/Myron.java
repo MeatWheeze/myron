@@ -30,7 +30,7 @@ public class Myron {
     }
 
     /**
-     * Tells Myron that the OBJ files from the given namespace should be treated.
+     * Allows Myron to process the given mod's resources.
      * @param namespace Mod ID to be registered
      */
     public static void registerNamespace(String namespace)

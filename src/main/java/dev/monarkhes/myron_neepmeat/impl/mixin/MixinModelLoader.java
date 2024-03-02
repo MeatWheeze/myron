@@ -25,22 +25,22 @@ public abstract class MixinModelLoader {
 
     @Unique private ModelResourceProvider objModelProvider;
 
-    @Inject(method = "loadModel", at = @At("HEAD"), cancellable = true)
-    private void addObjModel(Identifier id, CallbackInfo ci) {
-        if (this.objModelProvider == null) {
-            var resourceManager = MinecraftClient.getInstance().getResourceManager();
-            this.objModelProvider = new ObjLoader(resourceManager);
-        }
-
-        try {
-            @Nullable UnbakedModel model = this.objModelProvider.loadModelResource(id, null);
-
-            if (model != null) {
-                this.putModel(id, model);
-                ci.cancel();
-            }
-        } catch (ModelProviderException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Inject(method = "loadModel", at = @At("HEAD"), cancellable = true)
+//    private void addObjModel(Identifier id, CallbackInfo ci) {
+//        if (this.objModelProvider == null) {
+//            var resourceManager = MinecraftClient.getInstance().getResourceManager();
+//            this.objModelProvider = new ObjLoader(resourceManager);
+//        }
+//
+//        try {
+//            @Nullable UnbakedModel model = this.objModelProvider.loadModelResource(id, null);
+//
+//            if (model != null) {
+//                this.putModel(id, model);
+//                ci.cancel();
+//            }
+//        } catch (ModelProviderException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
