@@ -50,7 +50,8 @@ public class Myron implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        Namespaces.register("minecraft");
+        // For testing
+//        Namespaces.register("minecraft");
 
         ModelLoadingRegistry.INSTANCE.registerResourceProvider(ObjLoader::new);
         ModelLoadingRegistry.INSTANCE.registerVariantProvider(ObjLoader::new);
