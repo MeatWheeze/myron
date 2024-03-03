@@ -40,7 +40,12 @@ public class MyronBakedModel implements BakedModel, FabricBakedModel {
         if (this.backupQuads == null) {
             this.backupQuads = new ArrayList<>();
 
-            mesh.forEach(quadView -> this.backupQuads.add(quadView.toBakedQuad(0, this.sprite, false)));
+            if (mesh != null)
+                mesh.forEach(quadView -> this.backupQuads.add(quadView.toBakedQuad(0, this.sprite, false)));
+            else
+            {
+                Myron.LOGGER.warn("Mesh is null while generating backup quads quads for block {}", state != null ? state.getBlock().getName().getString() : "[no block given]");
+            }
         }
 
         return this.backupQuads;
