@@ -36,7 +36,7 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class Myron implements ClientModInitializer {
-    private final static Vec3f NONE = new Vec3f();
+    private final static Vec3f NONE = new Vec3f(0.5f, 0, 0.5f);
     private final static Vec3f BLOCKS = new Vec3f(0.5F, 0.5F, 0.5F);
 
     public static final String MOD_ID = "myron-neepmeat";
@@ -45,7 +45,9 @@ public class Myron implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        Namespaces.register(Myron.MOD_ID);
+
+        // For testing
+//        Namespaces.register("minecraft");
 
         ModelLoadingRegistry.INSTANCE.registerResourceProvider(ObjLoader::new);
         ModelLoadingRegistry.INSTANCE.registerVariantProvider(ObjLoader::new);
