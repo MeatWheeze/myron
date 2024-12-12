@@ -40,7 +40,7 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class Myron implements ClientModInitializer {
-    private final static Vector3f NONE = new Vector3f();
+    private final static Vector3f NONE = new Vector3f(0.5f, 0, 0.5f);
     private final static Vector3f BLOCKS = new Vector3f(0.5F, 0.5F, 0.5F);
 
     public static final String MOD_ID = "myron";
