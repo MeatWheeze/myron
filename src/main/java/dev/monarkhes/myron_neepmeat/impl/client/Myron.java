@@ -17,9 +17,7 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.ModelBakeSettings;
-import net.minecraft.client.texture.MissingSprite;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.screen.PlayerScreenHandler;
@@ -40,8 +38,15 @@ import java.util.function.Function;
 
 @Environment(EnvType.CLIENT)
 public class Myron implements ClientModInitializer {
-    private final static Vector3f NONE = new Vector3f(0.5f, 0, 0.5f);
-    private final static Vector3f BLOCKS = new Vector3f(0.5F, 0.5F, 0.5F);
+
+    // In a JSON model, the centre of the 16x16x16 cube is located at the end of the player's arm.
+    // In BlockBench, the origin of a JSON model is placed at the negative corner of the cube.
+    // The generic model format in BlockBench has the coordinate origin positioned in the bottom centre of the cube.
+    // This makes a [0.5 0.5 0.5] translation necessary for consistency.
+    // Since I (MeatWheeze) am mostly using BlockBench, it's probably more efficient to do the translation here.
+    private final static Vector3f NONE_OFFSET = new Vector3f(0.5f, 0.5f, 0.5f);
+
+    private final static Vector3f BLOCK_OFFSET = new Vector3f(0.5F, 0.5F, 0.5F);
 
     public static final String MOD_ID = "myron";
     public static final Logger LOGGER = LogManager.getLogger("Myron");
@@ -187,7 +192,7 @@ public class Myron implements ClientModInitializer {
                     : null;
 
             Vector3f pos = of(group.getVertex(face.getVertexIndex(0)));
-            pos.add(isBlock ? BLOCKS : NONE);
+            pos.add(isBlock ? BLOCK_OFFSET : NONE_OFFSET);
             Vector3f normal = of(group.getNormal(face.getNormalIndex(0)));
 
             rotate(settings, pos, normal);
@@ -207,7 +212,7 @@ public class Myron implements ClientModInitializer {
                         : null;
 
                 pos = of(group.getVertex(face.getVertexIndex(vertex)));
-                pos.add(isBlock ? BLOCKS : NONE);
+                pos.add(isBlock ? BLOCK_OFFSET : NONE_OFFSET);
                 normal = of(group.getNormal(face.getNormalIndex(vertex)));
 
                 rotate(settings, pos, normal);
@@ -224,7 +229,7 @@ public class Myron implements ClientModInitializer {
                         : null;
 
                 pos = of(group.getVertex(face.getVertexIndex(vertex + 1)));
-                pos.add(isBlock ? BLOCKS : NONE);
+                pos.add(isBlock ? BLOCK_OFFSET : NONE_OFFSET);
                 normal = of(group.getNormal(face.getNormalIndex(vertex + 1)));
 
                 rotate(settings, pos, normal);
@@ -268,7 +273,7 @@ public class Myron implements ClientModInitializer {
         Vector3f pos = of(group.getVertex(face.getVertexIndex(vertex)));
 
         // Used to offset blocks
-        pos.add(isBlock ? BLOCKS : NONE);
+        pos.add(isBlock ? BLOCK_OFFSET : NONE_OFFSET);
 
         Vector3f normal = face.containsNormalIndices()
                 ? of(group.getNormal(face.getNormalIndex(vertex)))
