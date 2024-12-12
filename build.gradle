@@ -37,7 +37,7 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation(include("de.javagl:obj:${obj_version}"))
+    modImplementation(include("de.javagl:obj:${project.obj_version}"))
 }
 
 
