@@ -48,8 +48,8 @@ public class Myron implements ClientModInitializer {
 
     private final static Vector3f BLOCK_OFFSET = new Vector3f(0.5F, 0.5F, 0.5F);
 
-    public static final String MOD_ID = "myron";
-    public static final Logger LOGGER = LogManager.getLogger("Myron");
+    public static final String MOD_ID = "myron-neepmeat";
+    public static final Logger LOGGER = LogManager.getLogger("Myron-NEEPMeat");
     public static final Map<Identifier, Mesh> MESHES = new HashMap<>();
 
     @Override
