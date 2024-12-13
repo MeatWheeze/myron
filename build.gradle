@@ -1,7 +1,7 @@
 plugins {
     id 'fabric-loom' version '1.5-SNAPSHOT'
     id 'maven-publish'
-//    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 archivesBaseName = project.archives_base_name
@@ -21,14 +21,14 @@ repositories {
 }
 
 // Relocating a Package
-//shadowJar {
-//    configurations = [project.configurations.shadow]
-//    relocate 'de.javagl.obj', 'myron.shaded.de.javagl.obj'
-//    archiveClassifier = "shadow"
-//}
+shadowJar {
+    configurations = [project.configurations.shadow]
+    relocate 'de.javagl.obj', 'myron.shaded.de.javagl.obj'
+    archiveClassifier = "shadow"
+}
 
-//tasks.remapJar.dependsOn shadowJar
-//(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
+tasks.remapJar.dependsOn shadowJar
+(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -37,7 +37,7 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation(include("de.javagl:obj:${project.obj_version}"))
+    modImplementation(shadow("de.javagl:obj:${project.obj_version}"))
 }
 
 
