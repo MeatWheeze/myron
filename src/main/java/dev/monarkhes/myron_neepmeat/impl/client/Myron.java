@@ -42,7 +42,7 @@ public class Myron implements ClientModInitializer {
     // The generic model format in BlockBench has the coordinate origin positioned in the bottom centre of the cube.
     // This makes a [0.5 0.5 0.5] translation necessary for consistency.
     // Since I (MeatWheeze) am mostly using BlockBench, it's probably more efficient to do the translation here.
-    private final static Vec3f NONE_OFFSET = new Vec3f(0.5f, 0.5f, 0.5f);
+    private final static Vec3f NONE_OFFSET = new Vec3f(0.5f, 0.0f, 0.5f);
 
     private final static Vec3f BLOCK_OFFSET = new Vec3f(0.5F, 0.5F, 0.5F);
 
