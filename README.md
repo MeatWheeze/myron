@@ -1,3 +1,7 @@
+## Note from MeatWheeze
+
+This fork contains some jank to only allow loading models from certain namespaces so that it doesn't interfere with other OBJ loading systems.
+
 ## Note from BlueVista
 This fork is just a port to 1.19.4. If you would like to use it, it's on my personal maven.
 ```groovy
